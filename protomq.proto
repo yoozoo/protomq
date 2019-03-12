@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+import "google/protobuf/descriptor.proto";
+
+package protomq;
+
+option go_package = "mqcommon";
+
+extend google.protobuf.MessageOptions {
+  string topic = 55008;
+}
