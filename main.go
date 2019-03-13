@@ -1,6 +1,7 @@
 package main
 
 //go:generate protoc protomq.proto --go_out=.\mqcommon
+//go:generate esc -o tpl/tpl.go -modtime 0 -pkg=tpl template
 
 import (
 	"github.com/yoozoo/protocli"
