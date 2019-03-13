@@ -10,5 +10,7 @@ import (
 func main() {
 	protocli.Init("protomq", "0.0.1")
 	protocli.KeepDefaultLangOut = true
+	protocli.RootCmd.AddCommand(servCmd)
+
 	protocli.Run()
 }
