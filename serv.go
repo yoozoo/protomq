@@ -64,12 +64,12 @@ func serv(cmd *cobra.Command, args []string) {
 			break
 		}
 
+		fmt.Printf("message at topic/partition/offset %v/%v/%v: %s = %s\n", m.Topic, m.Partition, m.Offset, string(m.Key), string(m.Value))
 		_, err = srv.Exec(&roadrunner.Payload{Body: m.Value})
 		if err != nil {
 			panic(err)
 		}
 
-		fmt.Printf("message at topic/partition/offset %v/%v/%v: %s = %s\n", m.Topic, m.Partition, m.Offset, string(m.Key), string(m.Value))
 		r.CommitMessages(ctx, m)
 	}
 }

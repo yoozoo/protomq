@@ -48,10 +48,11 @@ go get -u github.com/golang/protobuf/protoc-gen-go
     * topic缺失、重复
     * proto namespace检查
     * language namespace检查
-  * CI  
+  * CI
   * 消息大小限制、检查
   * 统计整合
   * [ ] example / guide
+* [ ] 集成Prometheus
 * kafka
   * 自动控制partition？
 * php
