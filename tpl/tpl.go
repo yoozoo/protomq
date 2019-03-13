@@ -227,6 +227,23 @@ R8cDAAA=
 `,
 	},
 
+	"/template/php/consumer.gophp": {
+		name:    "consumer.gophp",
+		local:   "template/php/consumer.gophp",
+		size:    717,
+		modtime: 0,
+		compressed: `
+H4sIAAAAAAAC/2xSX2+bMBB/niV/h1OFhKmS8AGydlNVLerDui4w7QWpcvEVrIHNDpMMIb77ZBJoM+2e
+4O53vz8nf/zUlA1n8fU1Z3ANnw+SYGdJqwKzPVayfzAO6VXmCAH5fw+LOetahKTRJKvsDN9eNPdWqn1n
+DNKWM8600c8tOhEq3TaV7J+RyFIbriBsnUKiMNpyRvi704QQHtAoS7HsnK2sVJumbMItZ8OwBv0Km8SR
+NUXaNziOnjuvOoUQ7p7uvqKTSjqZDcNmd/c0jvPqAhqGzaOs8W3iSdEoz8RZQAQ3YPAIbwGyn5Z+IQnf
+vYycJY5Q1tOdRJLePzyuIEnvv/1Io2iKfSx1hSCCF6t6uIGAaH1LmKM+oAhyaxz+cVEEA2cAAI76+dPX
+/9P6yYegbouzz2HYfO+ww9NceN0Fsr6tkQr8QrZOHGlTnJzMGF9xDKU0qkLwC+/FAasWYZb8BzsFaifO
+S8PLJefmlLlFo8TV1QrEaSdawp+tjJBLl5cgsrQke5QvXgSj9+eYiKZnIxYWXPY5Gzn7GwAA//+A3Vm2
+zQIAAA==
+`,
+	},
+
 	"/template": {
 		name:  "template",
 		local: `template`,
@@ -257,5 +274,7 @@ var _escDirs = map[string][]os.FileInfo{
 		_escData["/template/go/client.gogo"],
 	},
 
-	"template/php": {},
+	"template/php": {
+		_escData["/template/php/consumer.gophp"],
+	},
 }

@@ -1,0 +1,31 @@
+<?php
+/**
+ * @var Goridge\RelayInterface $relay
+ */
+use Spiral\Goridge;
+use Spiral\RoadRunner;
+
+ini_set('display_errors', 'stderr');
+require 'vendor/autoload.php';
+{{- if .StrongType}}
+include 'GPBMetadata\{{.GBP}}.php';
+include '{{.Name}}.php';
+{{- end}}
+
+$rr = new RoadRunner\Worker(new Spiral\Goridge\StreamRelay(STDIN, STDOUT));
+
+while ($body = $rr->receive($context)) {
+    try {
+        {{- if .StrongType}}
+    	$msg = new {{.QueueType}}();
+    	$msg->mergeFromString($body);
+        // handle $msg
+        {{ else }}
+        // handle $body string
+        {{- end}}
+
+        $rr->send("", (string)$context);
+    } catch (\Throwable $e) {
+        $rr->error((string)$e);
+    }
+}
