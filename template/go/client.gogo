@@ -27,18 +27,18 @@ func New{{.Name}}MQClient (brokers []string) *{{.Name}}MQClient {
 
 func (c *{{.Name}}MQClient)Send(msg {{.QueueType}}) (err error) {
     {{- if .StrongType}}
-	data, err := proto.Marshal(m)
+	data, err := proto.Marshal(msg)
 	if err != nil {
 		return
 	}
 
-	err = w.WriteMessages(context.Background(),
+	err = c.w.WriteMessages(context.Background(),
 		kafka.Message{
 			Value: data,
 		},
 	)
     {{ else }}
-	err = w.WriteMessages(context.Background(),
+	err = c.w.WriteMessages(context.Background(),
 		kafka.Message{
 			Value: []byte(msg),
 		},

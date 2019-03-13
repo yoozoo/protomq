@@ -212,7 +212,7 @@ var _escData = map[string]*_escFile{
 	"/template/go/client.gogo": {
 		name:    "client.gogo",
 		local:   "template/go/client.gogo",
-		size:    961,
+		size:    967,
 		modtime: 0,
 		compressed: `
 H4sIAAAAAAAC/6xTsW7bMBCdJUD/cNUQSEEi7yq82OlQoHYaxGiHIAMtnRjCEqkeKbiCwH8vSCqNWrdb
@@ -221,9 +221,9 @@ DGRJHKWVkgZ/mtS9AwBM0y2IBopHQ0ryw9h7TpRyYV6GY1GpbsVVyyRfeeXj0IRD+kZHWXvOiTUnBkum
 Rt6hNEKtfO2WO1rupM3Ye5971qG1u4dtK1Aa0IaGysAUmp/h2vOK7yQMUhL7aZpBVrDH8yU7O5I6IWl4
 etaGhOQ5XF+i5uaEZiAJVxeAue4NlBAM7PEcPGRLQ1slG8EXePfbBA8lwOzm5s/6QfWiKt0pnabC36xN
 /wJtWMtkhVTCVRD8gkybzWhQT3aBtfl8sctwsuofc+ePKOus09zF/jDggOHPziFDIkAiRflrOP/ZipoZ
-duOgUK7DJhY7RvqFtVmXJ3EkGl/8sAYpWtcrikLMSRx5e5Err+EcAtyh1oyjzualLDasOnFSg6wzN1gU
-VqqYcb5f9I21A5bgrbgHF0eUv9oGbDWCN/tuUk/Px9Ggiy5fKDq9N1VZQ/jWfg9sk/hXAAAA//926xRH
-wQMAAA==
+duOgUK7DJhY7RvqFta5xnsSRaHz5wxqkaF23KApBJ3HkDUauvIaqOIcQd6g146izeTGLDatOnNQg68wN
+F4W1Kmac7xh9Y+2AJXg77sFFEuWv1gFbjeANv6PY0/NxNOjnXGg6xTddWUP44n4PbZP4VwAAAP//FpHt
+R8cDAAA=
 `,
 	},
 
