@@ -42,17 +42,21 @@ go get -u github.com/golang/protobuf/protoc-gen-go
 
 * `protomq` cli
   * [x] 自动下载`protoc`
-  * 内嵌`protomq.proto`
+  * [ ] 内嵌`protomq.proto`
   * [x] 嵌套调用`protoc`
-  * protoc文件语法检查、错误提示
+  * [ ] protoc文件语法检查、错误提示
     * topic缺失、重复
     * proto namespace检查
     * language namespace检查
+  * CI  
   * 消息大小限制、检查
   * 统计整合
+  * [ ] example / guide
 * kafka
   * 自动控制partition？
 * php
+  * [ ] client / producer
+  * [ ] handler
   * 支持7.X
   * 能否支持 5.x？
   * 使用context传递key？
