@@ -24,6 +24,20 @@ go get github.com/spiral/roadrunner
 go get -u github.com/golang/protobuf/protoc-gen-go
 ```
 
+## 使用范例
+
+生成`go 生产者客户端`
+
+```bash
+./protomq.exe gen --lang=go ./output_folder ./test.proto
+```
+
+生成`php 消费者服务器端`
+
+```bash
+./protomq.exe gen --lang=php ./output_folder ./test.proto
+```
+
 ## TODO
 
 * `protomq` cli
