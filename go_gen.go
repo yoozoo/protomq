@@ -4,10 +4,8 @@ import (
 	"bytes"
 	"text/template"
 
-	"github.com/golang/protobuf/proto"
 	plugin "github.com/golang/protobuf/protoc-gen-go/plugin"
 	"github.com/yoozoo/protocli/generator/data"
-	"github.com/yoozoo/protomq/mqcommon"
 )
 
 type goGen struct {
@@ -45,22 +43,23 @@ func (g *goGen) genClient(packageName string, msg *data.ProtoMessage) string {
 
 func (g *goGen) Gen(applicationName string, packageName string, services []*data.ServiceData, messages []*data.MessageData, enums []*data.EnumData, options data.OptionMap) (result map[string]string, err error) {
 	result = make(map[string]string)
+	topicMap, err := util.RetriveTopics(messages)
+	if err != nil {
+		return nil, err
+	}
 	for _, msg := range messages {
-		m, _ := data.GetMessageProtoAndFile(msg.Name)
-		opt := m.Proto.GetOptions()
-		val, err := proto.GetExtension(opt, mqcommon.E_Topic)
-
+		topic, found := topicMap[msg.Name]
 		// only care about msg with mqcommon.topic option
-		if err != nil {
+		if !found {
 			continue
 		}
 
-		v := val.(*string)
-		g.topic = *v
+		g.topic = topic
+		m, _ := data.GetMessageProtoAndFile(msg.Name)
 		content := g.genClient(applicationName, m)
 
 		result[m.Proto.GetName()+".client.go"] = content
-		println("gen", *v)
+		println("gen", topic)
 	}
 	return
 }

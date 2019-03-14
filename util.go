@@ -11,6 +11,10 @@ import (
 	"strconv"
 	"text/template"
 
+	"github.com/golang/protobuf/proto"
+	"github.com/yoozoo/protocli/generator/data"
+
+	"github.com/yoozoo/protomq/mqcommon"
 	"github.com/yoozoo/protomq/tpl"
 )
 
@@ -80,4 +84,36 @@ func (g *_util) Die(err error) {
 func (g *_util) LoadTpl(tplPath string) string {
 	//useLocal is true, the filesystem's contents are instead used.
 	return tpl.FSMustString(debugTpl, tplPath)
+}
+
+// RetriveTopics will return error if there is no topic
+// or there are repeated topics
+func (g *_util) RetriveTopics(messages []*data.MessageData) (map[string]string, error) {
+	topics := make(map[string]bool, 0)
+	result := make(map[string]string, 0)
+
+	for _, msg := range messages {
+
+		m, _ := data.GetMessageProtoAndFile(msg.Name)
+		opt := m.Proto.GetOptions()
+		val, err := proto.GetExtension(opt, mqcommon.E_Topic)
+
+		if err != nil {
+			continue
+		}
+
+		v := val.(*string)
+		_, found := topics[*v]
+		if found {
+			return nil, fmt.Errorf("repeated topic: %s", *v)
+		}
+
+		topics[*v] = true
+		result[msg.Name] = *v
+	}
+
+	if len(topics) <= 0 {
+		return nil, fmt.Errorf("no topic found")
+	}
+	return result, nil
 }
