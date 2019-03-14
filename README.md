@@ -42,7 +42,7 @@ go get -u github.com/golang/protobuf/protoc-gen-go
 
 * `protomq` cli
   * [x] 自动下载`protoc`
-  * [ ] 内嵌`protomq.proto`
+  * [x] 内嵌`protomq.proto`
   * [x] 嵌套调用`protoc`
   * [ ] protoc文件语法检查、错误提示
     * topic缺失、重复
