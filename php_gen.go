@@ -5,10 +5,8 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/golang/protobuf/proto"
 	plugin "github.com/golang/protobuf/protoc-gen-go/plugin"
 	"github.com/yoozoo/protocli/generator/data"
-	"github.com/yoozoo/protomq/mqcommon"
 )
 
 type phpGen struct {
@@ -42,21 +40,23 @@ func (g *phpGen) genConsumer(packageName string, msg *data.ProtoMessage) string 
 
 func (g *phpGen) Gen(applicationName string, packageName string, services []*data.ServiceData, messages []*data.MessageData, enums []*data.EnumData, options data.OptionMap) (result map[string]string, err error) {
 	result = make(map[string]string)
-	for _, msg := range messages {
-		m, _ := data.GetMessageProtoAndFile(msg.Name)
-		opt := m.Proto.GetOptions()
-		val, err := proto.GetExtension(opt, mqcommon.E_Topic)
 
+	topicMap, err := util.RetriveTopics(messages)
+	if err != nil {
+		return nil, err
+	}
+	for _, msg := range messages {
+		topic, found := topicMap[msg.Name]
 		// only care about msg with mqcommon.topic option
-		if err != nil {
+		if !found {
 			continue
 		}
 
-		v := val.(*string)
+		m, _ := data.GetMessageProtoAndFile(msg.Name)
 		content := g.genConsumer(applicationName, m)
 
 		result[m.Proto.GetName()+"_comsumer.php"] = content
-		println("gen", *v)
+		println("gen", topic)
 	}
 	return
 }
