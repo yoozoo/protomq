@@ -1,0 +1,18 @@
+language: go
+go:
+  - "1.12"
+install:
+  - export GO111MODULE=on
+  - go mod download
+  - go get github.com/golang/protobuf/protoc-gen-go
+  - go build
+before_script:
+  - ./protomq init
+  - mkdir -p -m 700 test/result/go/
+  - mkdir -p -m 700 test/result/go/test/
+  - mkdir -p -m 700 test/result/php/
+  - mkdir -p -m 700 test/result/php/test/
+  - chmod +x test/protomq.bats
+script:
+  - cd test
+  - ./protomq.bats

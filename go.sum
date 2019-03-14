@@ -52,6 +52,8 @@ github.com/ugorji/go/codec v0.0.0-20181204163529-d75b2dcb6bc8/go.mod h1:VFNgLljT
 github.com/xordataexchange/crypt v0.0.3-0.20170626215501-b2862e3d0a77/go.mod h1:aYKd//L2LvnjZzWKhF00oedf4jCCReLcmhLdhm1A27Q=
 github.com/yoozoo/protocli v0.0.0-20190311142059-7ede7424c0af h1:zZm3reqQi52ubWQnQ0pNHsI1NMkV3hCeT5My7w5kNB0=
 github.com/yoozoo/protocli v0.0.0-20190311142059-7ede7424c0af/go.mod h1:cE2y6WTiOl6zt9iRAefiDV2YRdfJ8E0yyk8h938Wx9M=
+github.com/yoozoo/protocli v0.0.0-20190313060052-6f8720c907cf h1:mC3vPe6XNsTBexx5EmHNcHu4bBk+h6AlL4EgC+qP000=
+github.com/yoozoo/protocli v0.0.0-20190313060052-6f8720c907cf/go.mod h1:cE2y6WTiOl6zt9iRAefiDV2YRdfJ8E0yyk8h938Wx9M=
 golang.org/x/crypto v0.0.0-20180904163835-0709b304e793/go.mod h1:6SG95UA2DQfeDnfUPMdvaQW0Q7yPrPDi9nlGo2tz2b4=
 golang.org/x/crypto v0.0.0-20181203042331-505ab145d0a9/go.mod h1:6SG95UA2DQfeDnfUPMdvaQW0Q7yPrPDi9nlGo2tz2b4=
 golang.org/x/net v0.0.0-20180906233101-161cd47e91fd/go.mod h1:mL1N/T3taQHkDXs73rZJwtUhF3w3ftmwwsq0BUmARs4=
