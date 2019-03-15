@@ -55,7 +55,7 @@ func (g *phpGen) Gen(applicationName string, packageName string, services []*dat
 		m, _ := data.GetMessageProtoAndFile(msg.Name)
 		content := g.genConsumer(applicationName, m)
 
-		result[m.Proto.GetName()+"_comsumer.php"] = content
+		result[m.Proto.GetName()+"_consumer.php"] = content
 		println("gen", topic)
 	}
 	return
