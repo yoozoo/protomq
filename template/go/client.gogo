@@ -42,7 +42,7 @@ func (c *{{.Name}}MQClient)Send(msg {{.QueueType}}) (err error) {
 		kafka.Message{
 			Value: []byte(msg),
 		},
-	)    
+	)
     {{ end }}
 
 	return

@@ -6,7 +6,7 @@ import "protomq.proto";
 
 message JsonQueue {
 	option (protomq.topic) = "test";
-	
+
 	string data = 1;
 }
 

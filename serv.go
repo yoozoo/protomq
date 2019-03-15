@@ -48,7 +48,10 @@ func serv(cmd *cobra.Command, args []string) {
 		})
 	defer srv.Stop()
 
-	srv.Start()
+	err := srv.Start()
+	if err != nil {
+		panic(err)
+	}
 
 	r := kafka.NewReader(kafka.ReaderConfig{
 		Brokers:  strings.Split(servFlagValue.brokers, ","),
