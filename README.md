@@ -46,13 +46,13 @@ go get -u github.com/golang/protobuf/protoc-gen-go
   * [x] 自动下载`protoc`
   * [x] 内嵌`protomq.proto`
   * [x] 嵌套调用`protoc`
-  * [ ] protoc文件语法检查、错误提示
+  * [X] protoc文件语法检查、错误提示
     * topic缺失、重复
     * proto namespace检查
     * language namespace检查
-  * [ ] CI
-  * 消息大小限制、检查
-  * 统计整合
+  * [X] CI
+  * [ ] 消息大小限制、检查
+  * [ ] 统计整合
   * [ ] example / guide
 * [ ] 集成Prometheus
 * kafka
@@ -60,11 +60,11 @@ go get -u github.com/golang/protobuf/protoc-gen-go
 * php
   * [ ] client / producer
   * [ ] handler
-  * 支持7.X
-  * 能否支持 5.x？
-  * 使用context传递key？
-  * go并发？
-  * 控制回收？
+  * [ ] 支持7.X
+  * [ ] 能否支持 5.x？
+  * [ ] 使用context传递key？
+  * [ ] go并发？
+  * [ ] 控制回收？
 * go
   * worker pool
 * 测试
