@@ -3,10 +3,11 @@ syntax = "proto3";
 import "protomq.proto";
 
 // option go_package = "main";
+package test_package;
 
 message JsonQueue {
 	option (protomq.topic) = "test";
-	
+
 	string data = 1;
 }
 

@@ -2,7 +2,7 @@
 /**
  * @var Goridge\RelayInterface $relay
  */
-namespace {{ .PackageName }};
+namespace Test_package;
 
 use Spiral\Goridge;
 use Spiral\RoadRunner;
@@ -10,12 +10,7 @@ use Spiral\RoadRunner;
 ini_set('display_errors', 'stderr');
 require 'vendor/autoload.php';
 
-{{- if .StrongType}}
-include 'GPBMetadata\{{.GBP}}.php';
-include '{{.Name}}.php';
-{{- end}}
-
-abstract class {{ .ClassName }}
+abstract class JsonQueue_consumer
 {
     protected $rr;
 
@@ -28,13 +23,7 @@ abstract class {{ .ClassName }}
     {
         while ($body = $this->rr->receive($context)) {
             try {
-                {{- if .StrongType}}
-                $msg = new {{.QueueType}}();
-                $msg->mergeFromString($body);
-                $this->handle_msg($msg);
-                {{- else }}
                 $this->handle_msg($body);
-                {{- end}}
 
                 $rr->send("", (string) $context);
             } catch (\Throwable $e) {
@@ -43,5 +32,5 @@ abstract class {{ .ClassName }}
         }
     }
 
-    abstract protected function handle_msg({{if .StrongType}}{{.QueueType}}{{end}} $msg);
+    abstract protected function handle_msg( $msg);
 }

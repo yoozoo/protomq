@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"os"
 	"strings"
 	"text/template"
 
@@ -17,13 +18,18 @@ func (g *phpGen) Init(request *plugin.CodeGeneratorRequest) {
 	g.consumerTpl = util.getTpl("/template/php/consumer.gophp")
 }
 
-func (g *phpGen) genConsumer(packageName string, msg *data.ProtoMessage) string {
+func (g *phpGen) genConsumer(applicationName, packageName, className string, msg *data.ProtoMessage) string {
 	buf := bytes.NewBufferString("")
+	if len(packageName) <= 0 {
+		packageName = applicationName
+	}
 	data := map[string]interface{}{
 		"StrongType": !(len(msg.Proto.Field) == 1 &&
 			msg.Proto.Field[0].GetType().String() == "TYPE_STRING"),
-		"Name": msg.Proto.GetName(),
-		"GBP":  strings.ToUpper(packageName[:1]) + packageName[1:],
+		"Name":        msg.Proto.GetName(),
+		"GBP":         strings.ToUpper(applicationName[:1]) + applicationName[1:],
+		"PackageName": strings.Title(packageName),
+		"ClassName":   className,
 	}
 
 	if data["StrongType"].(bool) {
@@ -53,9 +59,14 @@ func (g *phpGen) Gen(applicationName string, packageName string, services []*dat
 		}
 
 		m, _ := data.GetMessageProtoAndFile(msg.Name)
-		content := g.genConsumer(applicationName, m)
+		className := m.Proto.GetName() + "_consumer"
+		fileName := className + ".php"
+		if len(packageName) > 0 {
+			fileName = packageName + string(os.PathSeparator) + fileName
+		}
+		content := g.genConsumer(applicationName, packageName, className, m)
 
-		result[m.Proto.GetName()+"_consumer.php"] = content
+		result[fileName] = content
 		println("gen", topic)
 	}
 	return
