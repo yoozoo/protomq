@@ -13,7 +13,8 @@ const commonProtoPath = "/protomq.proto"
 func main() {
 	protocli.Init("protomq", "0.0.1")
 	protocli.KeepDefaultLangOut = true
-	protocli.RootCmd.AddCommand(servCmd)
+	protocli.RootCmd.AddCommand(consServCmd)
+	protocli.RootCmd.AddCommand(prodServCmd)
 	protocli.RegisterIncludeFile(commonProtoPath, tpl.FSMustString(false, commonProtoPath))
 	protocli.Run()
 }

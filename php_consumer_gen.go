@@ -73,5 +73,5 @@ func (g *phpGen) Gen(applicationName string, packageName string, services []*dat
 }
 
 func init() {
-	data.RegisterCodeGenerator("php", &phpGen{})
+	data.RegisterCodeGenerator("phpconsumer", &phpGen{})
 }
