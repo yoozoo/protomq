@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"net"
 	"net/rpc"
 	"strings"
@@ -27,8 +28,8 @@ var (
 	prodFlagValue prodServFlag
 	writer        *kafka.Writer
 	prodServCmd   = &cobra.Command{
-		Use:   "prodServ",
-		Short: "prodServe a php producer",
+		Use:   "producerd",
+		Short: "producerd is a php producer server",
 		Args:  cobra.ExactArgs(0),
 		Run:   prodServ,
 	}
@@ -40,6 +41,8 @@ type Sender struct {
 }
 
 func (s *Sender) Send(data PHPMessage, r *string) error {
+	fmt.Printf("message at topic %s\n", data.Topic)
+
 	// get kafka writer
 	writer := s.getWriter(data.Topic)
 

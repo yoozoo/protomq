@@ -20,8 +20,8 @@ type consServFlag struct {
 var consServFlagValue consServFlag
 
 var consServCmd = &cobra.Command{
-	Use:   "consServ <comsumer.php>",
-	Short: "consServe a php script as mq consumer",
+	Use:   "consumerd <comsumer.php>",
+	Short: "consumerd serve a php script as mq consumer",
 	Args:  cobra.ExactArgs(1),
 	Run:   consServ,
 }
