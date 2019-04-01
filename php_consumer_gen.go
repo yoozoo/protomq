@@ -10,15 +10,15 @@ import (
 	"github.com/yoozoo/protocli/generator/data"
 )
 
-type phpGen struct {
+type phpConsGen struct {
 	consumerTpl *template.Template
 }
 
-func (g *phpGen) Init(request *plugin.CodeGeneratorRequest) {
+func (g *phpConsGen) Init(request *plugin.CodeGeneratorRequest) {
 	g.consumerTpl = util.getTpl("/template/php/consumer.gophp")
 }
 
-func (g *phpGen) genConsumer(applicationName, packageName, className string, msg *data.ProtoMessage) string {
+func (g *phpConsGen) genConsumer(applicationName, packageName, className string, msg *data.ProtoMessage) string {
 	buf := bytes.NewBufferString("")
 	if len(packageName) <= 0 {
 		packageName = applicationName
@@ -44,7 +44,7 @@ func (g *phpGen) genConsumer(applicationName, packageName, className string, msg
 	return buf.String()
 }
 
-func (g *phpGen) Gen(applicationName string, packageName string, services []*data.ServiceData, messages []*data.MessageData, enums []*data.EnumData, options data.OptionMap) (result map[string]string, err error) {
+func (g *phpConsGen) Gen(applicationName string, packageName string, services []*data.ServiceData, messages []*data.MessageData, enums []*data.EnumData, options data.OptionMap) (result map[string]string, err error) {
 	result = make(map[string]string)
 
 	topicMap, err := util.RetriveTopics(messages)
@@ -73,5 +73,5 @@ func (g *phpGen) Gen(applicationName string, packageName string, services []*dat
 }
 
 func init() {
-	data.RegisterCodeGenerator("phpconsumer", &phpGen{})
+	data.RegisterCodeGenerator("phpconsumer", &phpConsGen{})
 }

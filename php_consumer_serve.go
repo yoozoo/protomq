@@ -28,7 +28,7 @@ var consServCmd = &cobra.Command{
 
 func init() {
 	consServCmd.Flags().StringVar(&consServFlagValue.topic, "topic", "", "topic in msg go")
-	consServCmd.Flags().StringVar(&consServFlagValue.group, "group", "php", "comsumer group; default php")
+	consServCmd.Flags().StringVar(&consServFlagValue.group, "group", "php", "consumer group; default php")
 	consServCmd.Flags().StringVar(&consServFlagValue.brokers, "brokers", "localhost:9092", "brokers, separated by ,")
 }
 

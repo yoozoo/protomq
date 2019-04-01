@@ -5,6 +5,7 @@ import (
 	"net"
 	"net/rpc"
 	"strings"
+	"sync"
 
 	"github.com/spiral/goridge"
 
@@ -13,29 +14,36 @@ import (
 )
 
 type prodServFlag struct {
-	topic   string
 	brokers string
 	port    string
 }
 
-type rpcObj interface{}
+type PHPMessage struct {
+	Topic   string
+	Content string
+}
 
 var (
 	prodFlagValue prodServFlag
-	cmd           *cobra.Command
 	writer        *kafka.Writer
 	prodServCmd   = &cobra.Command{
-		Use:   "prodServ <comsumer.php>",
-		Short: "prodServe a php script as mq consumer",
-		Args:  cobra.ExactArgs(1),
+		Use:   "prodServ",
+		Short: "prodServe a php producer",
+		Args:  cobra.ExactArgs(0),
 		Run:   prodServ,
 	}
 )
 
-type Sender struct{}
+type Sender struct {
+	writerMap map[string]*kafka.Writer
+	wLock     sync.Mutex
+}
 
-func (s *Sender) Send(data string, r *string) error {
-	byteData := []byte(data)
+func (s *Sender) Send(data PHPMessage, r *string) error {
+	// get kafka writer
+	writer := s.getWriter(data.Topic)
+
+	byteData := []byte(data.Content)
 	err := writer.WriteMessages(context.Background(), kafka.Message{
 		Value: byteData,
 	})
@@ -45,12 +53,22 @@ func (s *Sender) Send(data string, r *string) error {
 	return nil
 }
 
-func prodServ(cmd *cobra.Command, args []string) {
-	writer = kafka.NewWriter(kafka.WriterConfig{
-		Brokers: strings.Split(prodFlagValue.brokers, ","),
-		Topic:   prodFlagValue.topic,
-	})
+func (s *Sender) getWriter(topic string) (writer *kafka.Writer) {
+	s.wLock.Lock()
+	defer s.wLock.Unlock()
 
+	writer, found := s.writerMap[topic]
+	if !found {
+		writer = kafka.NewWriter(kafka.WriterConfig{
+			Brokers: strings.Split(prodFlagValue.brokers, ","),
+			Topic:   topic,
+		})
+		s.writerMap[topic] = writer
+	}
+	return
+}
+
+func prodServ(prodServCmd *cobra.Command, args []string) {
 	port := prodFlagValue.port
 	if !strings.HasPrefix(port, ":") {
 		port = ":" + port
@@ -60,7 +78,9 @@ func prodServ(cmd *cobra.Command, args []string) {
 		panic(err)
 	}
 
-	rpc.Register(new(Sender))
+	rpc.Register(&Sender{
+		writerMap: make(map[string]*kafka.Writer),
+	})
 
 	for {
 		conn, err := ln.Accept()
@@ -72,7 +92,6 @@ func prodServ(cmd *cobra.Command, args []string) {
 }
 
 func init() {
-	cmd.Flags().StringVar(&prodFlagValue.topic, "topic", "", "topic in msg go")
-	cmd.Flags().StringVar(&prodFlagValue.brokers, "brokers", "localhost:9092", "brokers, separated by ,")
-	cmd.Flags().StringVar(&prodFlagValue.port, "port", ":8080", "port number")
+	prodServCmd.Flags().StringVar(&prodFlagValue.brokers, "brokers", "localhost:9092", "brokers, separated by ,")
+	prodServCmd.Flags().StringVar(&prodFlagValue.port, "port", ":8080", "port number")
 }
