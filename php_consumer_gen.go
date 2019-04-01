@@ -45,6 +45,7 @@ func (g *phpConsGen) genConsumer(applicationName, packageName, className string,
 }
 
 func (g *phpConsGen) Gen(applicationName string, packageName string, services []*data.ServiceData, messages []*data.MessageData, enums []*data.EnumData, options data.OptionMap) (result map[string]string, err error) {
+	packageName = strings.Title(packageName)
 	result = make(map[string]string)
 
 	topicMap, err := util.RetriveTopics(messages)

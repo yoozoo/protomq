@@ -44,6 +44,7 @@ func (g *phpProdGen) genProducer(applicationName, packageName, className, topic 
 }
 
 func (g *phpProdGen) Gen(applicationName string, packageName string, services []*data.ServiceData, messages []*data.MessageData, enums []*data.EnumData, options data.OptionMap) (result map[string]string, err error) {
+	packageName = strings.Title(packageName)
 	result = make(map[string]string)
 
 	topicMap, err := util.RetriveTopics(messages)
