@@ -241,18 +241,33 @@ tnLLjX3mXRhbAJNtRL+sUMkOJ2AsZQvMA7AArbAuTym1LVnLBdl8vr1yzeujMHpUTV4sgKXrKWdaGMZ+
 	"/template/php/consumer.gophp": {
 		name:    "consumer.gophp",
 		local:   "template/php/consumer.gophp",
-		size:    1103,
+		size:    1057,
 		modtime: 0,
 		compressed: `
-H4sIAAAAAAAC/4xT3W6cPBC991OMIiTMKrt5AL7kq9KoUS6apmGr3iCtvPYErIBNxybpyuLdK7xo/7KV
-6isznDmcM2f47/+u7tjVbMZgBp/eBMG9Ja0qLJ+xEZsH45FehERIaHxmMLtiRrTourEYAiyehHwVFT6K
-FmEYcsZ6h1B0mkRTTlz5Ye3ZCvXcG4OUM6aNXjn0PFXadY3YrJDIkksvIXVeIVGa5YzwV68JIX1Doyxd
-id7bxgq16OouzRkLYQ76BRaFJ2uq5abDYWDayKZXCOn90+1X9EIJL8oQFve3T8Mwde4wISxG/bsXIyMa
-NQyMibXzJKQH2QjnouPP423yywIDAOjIepQeFSQ0+oq1ft1oCS+9kV5bA6uVtMZ56qXnWURse8eT+Fq7
-+Q0RXIPBd9gPqfxp6RWJj9XjqZaFJxRtzIkXy7uHx0solnfffiyzLI/Mw3kh1JsPAt5r3SDwZG3VBq73
-euY3hBL1G/JEWuPxt8+yg7bxeNqcVCL1uVBOQUnrqslxCIvvPfa4RfLJwSl4ftMiVfiFbFt40qbaKj6H
-3jqohVENrlpX8bH/DDBm3bgY5j+Q/OVzBxvzgWScokOj+MXFJXAXdWewm+cx2QBSeFkDL5c12XexbhAS
-zM5MOPLG/4XvSfGUjh3fJn27rd4v7m49DtyGcBrhcUwhRM8wjXZgfwIAAP//d1tbp08EAAA=
+H4sIAAAAAAAC/4xTXWvbMBR916+4FINlaLwf4LWDrqzsYV0WZ+wlEBTp1ha1Je9KbhaE//uwYvLVDKYn
+cX3u8TnnXn381NUdM6JF1wmJEALkcyFfRYXPokUYhoKx3iGUnSbRrJ4saVVhcVpbWKEWvTFIBWPa6LVD
+z1OlXdeI3RqJLLn0FlLnFRKlWcEIf/eaENI3NMrSB9F721ih8q7u0oKxEGagXyAvPVlTLXcdDgPTRja9
+Qkif5g/f0AslvFiFkD89zIdh6jxgQshH/YcPIyMaNQyMiY3zJKQH2QjnouPP423yywIDAOjIepQeFSQ0
++oq1ftNoCS+9kV5bA+u1tMZ56qXnWUTse8eT+Fq72T0R3IHBLRxDWv2y9IrEx+p5qqvSE4p2gY3Y8XL5
++PX5Fsrl4/efyywrIvNwXQj15p2Aba0bBJ5srNrB3VHP7J5Qon5DnkhrPP7xWXbSNh5Pu4tKpL42lEtQ
+0rpqchxC/qPHHvdIPjm4BM/uW6QKv5BtS0/aVHvF19B7B7UwqsF16yo+9l8Bxlk3Lg7zP0j+8buTjXlH
+Mqbo0Ch+c3ML3EXdGRzyPCcbQAova+CrZU12KzYNQoLZlYQjb3wv/EiKl3Ts/DbpO2z1cXEP63HiNoTL
+EZ6PKYToGaZoB/Y3AAD//915QKghBAAA
+`,
+	},
+
+	"/template/php/producer.gophp": {
+		name:    "producer.gophp",
+		local:   "template/php/producer.gophp",
+		size:    590,
+		modtime: 0,
+		compressed: `
+H4sIAAAAAAAC/2yQQW+cMBCF7/4VI8QBVllCemkkCq2UQ29VGvYYKZraE2LFsS3bpKKW/3uFQWmi7VyG
+GR5vPt6Xr/bJMo0v5C1yghihuUX+jBP9wBeClDrGZk8wWulQ3X83ToqJOsa4Qu+z/mZ92tUsMgCAy8Mh
+dzjAt1d0sH92f3d7s+8vc7dOvmIgKJ3lHdtW8y8lOTzOmgdpNDw8cKN9cDMPVYlCOOihuPr0uWmbtrkq
+LqC0xgXo4bq9butssTGsVYYn6Y+Dsxx60PT7PUj1fh4Nf6ZwRwqX7cruW9ddNkv/h/OkRRWjfIRmDM7o
+6bRYSinG5udMM20TxEhapFQKDHhGaHFRBgX0gM7hUr29WasIxkpeQD9AsUZ9WkdIqbj4KONGB9IhC/OZ
+c6bj4MlJVPIPncwYnNRTVe9k/9z23/2Y3XHgqFRVjKQFuWZtOfeN/C2hxP4GAAD//8nzRZ1OAgAA
 `,
 	},
 
@@ -288,5 +303,6 @@ var _escDirs = map[string][]os.FileInfo{
 
 	"template/php": {
 		_escData["/template/php/consumer.gophp"],
+		_escData["/template/php/producer.gophp"],
 	},
 }

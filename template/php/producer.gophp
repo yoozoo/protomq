@@ -1,0 +1,26 @@
+<?php
+namespace {{ .PackageName }};
+
+use Spiral\Goridge;
+
+class {{ .ClassName }}
+{
+    /**
+     * @var Goridge\RPC
+     */
+    private $rpc;
+
+    public function __construct($addr = "127.0.0.1", $port = 8080)
+    {
+        $this->rpc = new Goridge\RPC(new Goridge\SocketRelay($addr, $port));
+    }
+
+    public function send({{if .StrongType}}{{.QueueType}} {{end}}$data)
+    {
+        $payload = array(
+            "topic" => "{{ .Topic }}",
+            "content" => $data{{if .StrongType}}->serializeToString(){{end}},
+        );
+        $this->rpc->call("Sender.Send", $payload);
+    }
+}

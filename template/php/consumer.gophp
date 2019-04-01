@@ -1,7 +1,4 @@
 <?php
-/**
- * @var Goridge\RelayInterface $relay
- */
 namespace {{ .PackageName }};
 
 use Spiral\Goridge;

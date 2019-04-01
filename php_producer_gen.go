@@ -71,6 +71,10 @@ func (g *phpProdGen) Gen(applicationName string, packageName string, services []
 	return
 }
 
+func (g *phpProdGen) GetLang() string {
+	return "php"
+}
+
 func init() {
 	data.RegisterCodeGenerator("phpproducer", &phpProdGen{})
 }
