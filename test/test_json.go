@@ -1,7 +1,7 @@
 package main
 
 import (
-	test "github.com/yoozoo/protomq/temp"
+	test "github.com/yoozoo/protomq/test/expected/go/test"
 )
 
 func main() {

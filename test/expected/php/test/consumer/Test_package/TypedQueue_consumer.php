@@ -1,7 +1,4 @@
 <?php
-/**
- * @var Goridge\RelayInterface $relay
- */
 namespace Test_package;
 
 use Spiral\Goridge;
@@ -9,8 +6,10 @@ use Spiral\RoadRunner;
 
 ini_set('display_errors', 'stderr');
 require 'vendor/autoload.php';
+include 'GPBMetadata\Test.php';
+include 'TypedQueue.php';
 
-abstract class JsonQueue_consumer
+abstract class TypedQueue_consumer
 {
     protected $rr;
 
@@ -23,7 +22,9 @@ abstract class JsonQueue_consumer
     {
         while ($body = $this->rr->receive($context)) {
             try {
-                $this->handle_msg($body);
+                $msg = new TypedQueue();
+                $msg->mergeFromString($body);
+                $this->handle_msg($msg);
 
                 $rr->send("", (string) $context);
             } catch (\Throwable $e) {
@@ -32,5 +33,5 @@ abstract class JsonQueue_consumer
         }
     }
 
-    abstract protected function handle_msg( $msg);
+    abstract protected function handle_msg(TypedQueue $msg);
 }

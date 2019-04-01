@@ -7,7 +7,7 @@
 }
 
 @test "test.proto php output" {
-	skip
-	../protomq gen --lang=phpconsumer result/php/test proto/test.proto
+	../protomq gen --lang=phpconsumer result/php/test/consumer proto/test.proto
+	../protomq gen --lang=phpproducer result/php/test/producer proto/test.proto
 	diff -I "^//.*$" -r -n result/php/ expected/php/
 }

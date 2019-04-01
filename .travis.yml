@@ -12,6 +12,8 @@ before_script:
   - mkdir -p -m 700 test/result/go/test/
   - mkdir -p -m 700 test/result/php/
   - mkdir -p -m 700 test/result/php/test/
+  - mkdir -p -m 700 test/result/php/test/consumer
+  - mkdir -p -m 700 test/result/php/test/producer
   - chmod +x test/protomq.bats
 script:
   - cd test
