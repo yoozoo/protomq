@@ -60,7 +60,7 @@ func (g *phpConsGen) Gen(applicationName string, packageName string, services []
 		}
 
 		m, _ := data.GetMessageProtoAndFile(msg.Name)
-		className := m.Proto.GetName() + "_consumer"
+		className := m.Proto.GetName() + "Consumer"
 		fileName := className + ".php"
 		if len(packageName) > 0 {
 			fileName = packageName + string(os.PathSeparator) + fileName

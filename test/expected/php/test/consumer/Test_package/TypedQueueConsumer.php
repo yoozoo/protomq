@@ -1,11 +1,11 @@
 <?php
-namespace {{ .PackageName }};
+namespace Test_package;
 
 use Exception;
 use Spiral\Goridge;
 use Spiral\RoadRunner;
 
-class {{ .ClassName }}
+class TypedQueueConsumer
 {
     private $rr;
     private $handler;
@@ -30,13 +30,9 @@ class {{ .ClassName }}
     {
         while ($body = $this->rr->receive($context)) {
             try {
-                {{- if .StrongType}}
-                $msg = new {{.QueueType}}();
+                $msg = new TypedQueue();
                 $msg->mergeFromString($body);
                 call_user_func($this->handler, $msg);
-                {{- else }}
-                call_user_func($this->handler, $body);
-                {{- end }}
 
                 $this->rr->send("", (string) $context);
             } catch (\Throwable $e) {

@@ -38,7 +38,7 @@ func consServ(cmd *cobra.Command, args []string) {
 
 	srv := roadrunner.NewServer(
 		&roadrunner.ServerConfig{
-			Command: "php " + phpScript + " echo pipes",
+			Command: "php " + phpScript,
 			Relay:   "pipes",
 			Pool: &roadrunner.Config{
 				NumWorkers:      1,
