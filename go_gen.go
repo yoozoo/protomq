@@ -64,6 +64,10 @@ func (g *goGen) Gen(applicationName string, packageName string, services []*data
 	return
 }
 
+func (g *goGen) GetLang() string {
+	return "go"
+}
+
 func init() {
 	data.RegisterCodeGenerator("go", &goGen{})
 }

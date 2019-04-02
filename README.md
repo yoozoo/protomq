@@ -37,8 +37,10 @@ go get -u github.com/golang/protobuf/protoc-gen-go
 生成`php 消费者服务器端`
 
 ```bash
-./protomq.exe gen --lang=php ./output_folder ./test.proto
+./protomq.exe gen --lang=phpconsumer ./output_folder ./test.proto
 ```
+
+生成`php 生产者客户端`详情在[这里](docs/php_producer_zh.md)。
 
 ## TODO
 

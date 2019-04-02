@@ -5,5 +5,5 @@ require (
 	github.com/segmentio/kafka-go v0.2.2
 	github.com/spf13/cobra v0.0.3
 	github.com/spiral/roadrunner v1.3.5
-	github.com/yoozoo/protocli v0.0.0-20190313060052-6f8720c907cf
+	github.com/yoozoo/protocli v0.0.2
 )

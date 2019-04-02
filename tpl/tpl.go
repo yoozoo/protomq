@@ -212,47 +212,62 @@ var _escData = map[string]*_escFile{
 	"/protomq.proto": {
 		name:    "protomq.proto",
 		local:   "protomq.proto",
-		size:    192,
+		size:    181,
 		modtime: 0,
 		compressed: `
-H4sIAAAAAAAC/zSNUQrCMBAF/wO5wyMHaAtSEEqPIB5BYrqGoMmmyQoV8e5CSn9ndt/UTxK7YYbJhYVP
-ZtJKqxAzF4HxzP5FfVP396NfqLoSsnDpGtuvs3VP6wkNxbUxzhI4wfPtsDNMXB3HyGl/o00oLdgb3dHo
-LlSr9XRtAxVfrYAqJSQP4RwcZozjMJwnrX5a/QMAAP//xV52BcAAAAA=
+H4sIAAAAAAAC/zSMUarCMBBF/2cVlyygLTwKD0qXIC5BYjqGoMmkyQgVce/SSH/vuefUV1K7YYbJRVT+
+zEQUYpaiMF7EP7hv4Pq89QtXV0JWKV3b9m+27m49ow1xnYgka5AEL5eDzTBxdRKjpF3hTTkt+NW7o96d
+uFbr+dz0ijcBVUtIHio5OMwYx2H4n+hD3wAAAP//vsI68bUAAAA=
 `,
 	},
 
 	"/template/go/client.gogo": {
 		name:    "client.gogo",
 		local:   "template/go/client.gogo",
-		size:    967,
+		size:    914,
 		modtime: 0,
 		compressed: `
-H4sIAAAAAAAC/6xTsW7bMBCdJUD/cNUQSEEi7yq82OlQoHYaxGiHIAMtnRjCEqkeKbiCwH8vSCqNWrdb
-PJG89+69ez6tVrBVNQJHicQM1nAcoSdlVPej5Ooj3N3D/v4An+4+H4okTuKeVSfGEaap+BqO1rp30fWK
-DGRJHKWVkgZ/mtS9AwBM0y2IBopHQ0ryw9h7TpRyYV6GY1GpbsVVyyRfeeXj0IRD+kZHWXvOiTUnBkum
-Rt6hNEKtfO2WO1rupM3Ye5971qG1u4dtK1Aa0IaGysAUmp/h2vOK7yQMUhL7aZpBVrDH8yU7O5I6IWl4
-etaGhOQ5XF+i5uaEZiAJVxeAue4NlBAM7PEcPGRLQ1slG8EXePfbBA8lwOzm5s/6QfWiKt0pnabC36xN
-/wJtWMtkhVTCVRD8gkybzWhQT3aBtfl8sctwsuofc+ePKOus09zF/jDggOHPziFDIkAiRflrOP/ZipoZ
-duOgUK7DJhY7RvqFta5xnsSRaHz5wxqkaF23KApBJ3HkDUauvIaqOIcQd6g146izeTGLDatOnNQg68wN
-F4W1Kmac7xh9Y+2AJXg77sFFEuWv1gFbjeANv6PY0/NxNOjnXGg6xTddWUP44n4PbZP4VwAAAP//FpHt
-R8cDAAA=
+H4sIAAAAAAAC/6xSPW/bMBCdeb/iqiGQAkfeVXix06FA7TSI0Q5BBlo6MYQlUiUpuIbA/16QVPMBZ4ym
+E967e+8eb7nEjW4IBSky3FGDhzMORjvd/6mE/oq3d7i72+O32+/7EmDg9ZELwmkqf6bSewDZD9o4zIFl
+tVaO/roMABFxmm5Qtlg+OKOV2J+HQGeZkO55PJS17pdCd1yJZVQ8jG0qspdmUk3oOPL2yPFtnyXRk3JS
+LyN2I3QGBYA7D9Hcjvfk/fZ+00lSDq0zY+1winNPeB17yt9GOjLgAdpR1bij02VnfjD6SMbi45N1RipR
+4PUlKw025Eaj8OoCT3DUrjBp7+iU5PO3XjZatVK80sO3TgYqxNnK4h2814Osq1Bl01TGP++z95w177iq
+yVR4ldR+ELdufXZkJ/9K9UWq/Uskef3BtsUDqSbvrQhB3480UnrYAnMyBskYbYo5ko8PoOGOLwIRq1U6
+tnLLjX3mXRhbAJNtRL+sUMkOJ2AsZQvMA7AArbAuTym1LVnLBdl8vr1yzeujMHpUTV4sgKXrKWdaGMZ+
+8W6kCqMPYMwvgBWzX6TOEgaXnybz+HQ4O4qrXaqpJojB/wU9/AsAAP//EFC9DZIDAAA=
 `,
 	},
 
 	"/template/php/consumer.gophp": {
 		name:    "consumer.gophp",
 		local:   "template/php/consumer.gophp",
-		size:    717,
+		size:    1057,
 		modtime: 0,
 		compressed: `
-H4sIAAAAAAAC/2xSX2+bMBB/niV/h1OFhKmS8AGydlNVLerDui4w7QWpcvEVrIHNDpMMIb77ZBJoM+2e
-4O53vz8nf/zUlA1n8fU1Z3ANnw+SYGdJqwKzPVayfzAO6VXmCAH5fw+LOetahKTRJKvsDN9eNPdWqn1n
-DNKWM8600c8tOhEq3TaV7J+RyFIbriBsnUKiMNpyRvi704QQHtAoS7HsnK2sVJumbMItZ8OwBv0Km8SR
-NUXaNziOnjuvOoUQ7p7uvqKTSjqZDcNmd/c0jvPqAhqGzaOs8W3iSdEoz8RZQAQ3YPAIbwGyn5Z+IQnf
-vYycJY5Q1tOdRJLePzyuIEnvv/1Io2iKfSx1hSCCF6t6uIGAaH1LmKM+oAhyaxz+cVEEA2cAAI76+dPX
-/9P6yYegbouzz2HYfO+ww9NceN0Fsr6tkQr8QrZOHGlTnJzMGF9xDKU0qkLwC+/FAasWYZb8BzsFaifO
-S8PLJefmlLlFo8TV1QrEaSdawp+tjJBLl5cgsrQke5QvXgSj9+eYiKZnIxYWXPY5Gzn7GwAA//+A3Vm2
-zQIAAA==
+H4sIAAAAAAAC/4xTXWvbMBR916+4FINlaLwf4LWDrqzsYV0WZ+wlEBTp1ha1Je9KbhaE//uwYvLVDKYn
+cX3u8TnnXn381NUdM6JF1wmJEALkcyFfRYXPokUYhoKx3iGUnSbRrJ4saVVhcVpbWKEWvTFIBWPa6LVD
+z1OlXdeI3RqJLLn0FlLnFRKlWcEIf/eaENI3NMrSB9F721ih8q7u0oKxEGagXyAvPVlTLXcdDgPTRja9
+Qkif5g/f0AslvFiFkD89zIdh6jxgQshH/YcPIyMaNQyMiY3zJKQH2QjnouPP423yywIDAOjIepQeFSQ0
++oq1ftNoCS+9kV5bA+u1tMZ56qXnWUTse8eT+Fq72T0R3IHBLRxDWv2y9IrEx+p5qqvSE4p2gY3Y8XL5
++PX5Fsrl4/efyywrIvNwXQj15p2Aba0bBJ5srNrB3VHP7J5Qon5DnkhrPP7xWXbSNh5Pu4tKpL42lEtQ
+0rpqchxC/qPHHvdIPjm4BM/uW6QKv5BtS0/aVHvF19B7B7UwqsF16yo+9l8Bxlk3Lg7zP0j+8buTjXlH
+Mqbo0Ch+c3ML3EXdGRzyPCcbQAova+CrZU12KzYNQoLZlYQjb3wv/EiKl3Ts/DbpO2z1cXEP63HiNoTL
+EZ6PKYToGaZoB/Y3AAD//915QKghBAAA
+`,
+	},
+
+	"/template/php/producer.gophp": {
+		name:    "producer.gophp",
+		local:   "template/php/producer.gophp",
+		size:    590,
+		modtime: 0,
+		compressed: `
+H4sIAAAAAAAC/2yQQW+cMBCF7/4VI8QBVllCemkkCq2UQ29VGvYYKZraE2LFsS3bpKKW/3uFQWmi7VyG
+GR5vPt6Xr/bJMo0v5C1yghihuUX+jBP9wBeClDrGZk8wWulQ3X83ToqJOsa4Qu+z/mZ92tUsMgCAy8Mh
+dzjAt1d0sH92f3d7s+8vc7dOvmIgKJ3lHdtW8y8lOTzOmgdpNDw8cKN9cDMPVYlCOOihuPr0uWmbtrkq
+LqC0xgXo4bq9butssTGsVYYn6Y+Dsxx60PT7PUj1fh4Nf6ZwRwqX7cruW9ddNkv/h/OkRRWjfIRmDM7o
+6bRYSinG5udMM20TxEhapFQKDHhGaHFRBgX0gM7hUr29WasIxkpeQD9AsUZ9WkdIqbj4KONGB9IhC/OZ
+c6bj4MlJVPIPncwYnNRTVe9k/9z23/2Y3XHgqFRVjKQFuWZtOfeN/C2hxP4GAAD//8nzRZ1OAgAA
 `,
 	},
 
@@ -288,5 +303,6 @@ var _escDirs = map[string][]os.FileInfo{
 
 	"template/php": {
 		_escData["/template/php/consumer.gophp"],
+		_escData["/template/php/producer.gophp"],
 	},
 }
