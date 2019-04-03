@@ -60,15 +60,15 @@ go get -u github.com/golang/protobuf/protoc-gen-go
 * kafka
   * 自动控制partition？
 * php
-  * [ ] client / producer
-  * [ ] handler
-  * [ ] 支持7.X
-  * [ ] 能否支持 5.x？
+  * [X] client / producer
+  * [X] handler
+  * [X] 支持7.X
+  * [X] 能否支持 5.x？()
   * [ ] 使用context传递key？
-  * [ ] go并发？
-  * [ ] 控制回收？
+  * [x] go并发？
+  * [x] 控制回收？
 * go
-  * worker pool
+  * [x] worker pool
 * 测试
   * 大量fetch，但不commit
   * 多个group
