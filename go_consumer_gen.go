@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"strings"
 	"text/template"
 
 	plugin "github.com/golang/protobuf/protoc-gen-go/plugin"
@@ -23,8 +24,9 @@ func (g *goConsumerGen) genClient(packageName string, msg *data.ProtoMessage) st
 		"Package": packageName,
 		"StrongType": !(len(msg.Proto.Field) == 1 &&
 			msg.Proto.Field[0].GetType().String() == "TYPE_STRING"),
-		"Name":  msg.Proto.GetName(),
-		"Topic": g.topic,
+		"Name":      msg.Proto.GetName(),
+		"LowerName": strings.ToLower(msg.Proto.GetName()),
+		"Topic":     g.topic,
 	}
 
 	if data["StrongType"].(bool) {
@@ -56,7 +58,7 @@ func (g *goConsumerGen) Gen(applicationName string, packageName string, services
 
 		g.topic = topic
 		m, _ := data.GetMessageProtoAndFile(msg.Name)
-		content := g.genClient(applicationName, m)
+		content := g.genClient(packageName, m)
 
 		result[m.Proto.GetName()+".consumer.go"] = content
 		println("gen", topic)

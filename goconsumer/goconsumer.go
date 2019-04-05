@@ -31,6 +31,10 @@ func (c *Consumer) RegisterHandler(handler consumerHandler) {
 	c.handler = handler
 }
 
+func (c *Consumer) SetTopic(topic string) {
+	c.topic = topic
+}
+
 func (c *Consumer) Run() {
 	ctx := context.Background()
 

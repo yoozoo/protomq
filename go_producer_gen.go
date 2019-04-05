@@ -56,7 +56,7 @@ func (g *goGen) Gen(applicationName string, packageName string, services []*data
 
 		g.topic = topic
 		m, _ := data.GetMessageProtoAndFile(msg.Name)
-		content := g.genClient(applicationName, m)
+		content := g.genClient(packageName, m)
 
 		result[m.Proto.GetName()+".producer.go"] = content
 		println("gen", topic)
