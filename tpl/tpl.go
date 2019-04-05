@@ -221,9 +221,26 @@ uFbr+dz0ijcBVUtIHio5OMwYx2H4n+hD3wAAAP//vsI68bUAAAA=
 `,
 	},
 
-	"/template/go/client.gogo": {
-		name:    "client.gogo",
-		local:   "template/go/client.gogo",
+	"/template/go/consumer.gogo": {
+		name:    "consumer.gogo",
+		local:   "template/go/consumer.gogo",
+		size:    1026,
+		modtime: 0,
+		compressed: `
+H4sIAAAAAAAC/3RSzW7bMAw+R0/B5TDYwyrfU+TUDtiALd3abHclphUjlujpZ0Um6N0LyXaCFE5OjEh+
+/H5cVfBANYJEjUY4rGF3gt6QI/V3JekeHp9g87SFL4/ftpyxXuyPQiKEwH8OZYyMtaon46Bgi6Vs3cHv
++J5UZVEq1K6l6iiao7iTtLweOBH9J6rGa5WkPWnrFZolAwAI4Q7aBviLM6Tl9tSnW1cAkjqh5QCw881Q
+XJZR1zGykjF36jPl7/SKZiMUxvhV6LpDA43X+2LuUgj8l0eP0z/sLMZonWm1DCFDl4DGkGHsnzDv4B9G
+JbCGiyy+wdepUZSMVRU8o2ytQxMCv+ZlxgZk70Chtcn3w9BmifbN5WKcmpdcQmCLA6zWg3YFn/IJ/mM4
+MYqCkG28nUPqTKxWa4CPZxYhssWibRJO6uRQ+G+thLEH0RWK/xGdx8/TdnmfJz+sQbfd5Wr6GXTe6NQ+
+Pyfs8XlUWUw4V4RTXBBnpocEJxbluy1d56XIFvN58snzs9UlizlJePb6bME5fuO1BUkwfQJpcoNYg6NL
+xFNcTWusG6OdASvKMZQb1F7Qbalv98UyBJ6rGJflbSVeF4n8WwAAAP///z5cIAIEAAA=
+`,
+	},
+
+	"/template/go/producer.gogo": {
+		name:    "producer.gogo",
+		local:   "template/go/producer.gogo",
 		size:    914,
 		modtime: 0,
 		compressed: `
@@ -298,7 +315,8 @@ var _escDirs = map[string][]os.FileInfo{
 	},
 
 	"template/go": {
-		_escData["/template/go/client.gogo"],
+		_escData["/template/go/consumer.gogo"],
+		_escData["/template/go/producer.gogo"],
 	},
 
 	"template/php": {
