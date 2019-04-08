@@ -9,7 +9,9 @@ install:
 before_script:
   - ./protomq init
   - mkdir -p -m 700 test/result/go/
-  - mkdir -p -m 700 test/result/go/test/
+  - mkdir -p -m 700 test/result/go/test
+  - mkdir -p -m 700 test/result/go/test/consumer
+  - mkdir -p -m 700 test/result/go/test/producer
   - mkdir -p -m 700 test/result/php/
   - mkdir -p -m 700 test/result/php/test/
   - mkdir -p -m 700 test/result/php/test/consumer
