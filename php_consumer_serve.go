@@ -12,9 +12,10 @@ import (
 )
 
 type consServFlag struct {
-	topic   string
-	group   string
-	brokers string
+	topic      string
+	group      string
+	brokers    string
+	numWorkers int64
 }
 
 var consServFlagValue consServFlag
@@ -30,6 +31,7 @@ func init() {
 	consServCmd.Flags().StringVar(&consServFlagValue.topic, "topic", "", "topic in msg go")
 	consServCmd.Flags().StringVar(&consServFlagValue.group, "group", "php", "consumer group; default php")
 	consServCmd.Flags().StringVar(&consServFlagValue.brokers, "brokers", "localhost:9092", "brokers, separated by ,")
+	consServCmd.Flags().Int64Var(&consServFlagValue.numWorkers, "workers", 1, "number of max php workers")
 }
 
 func consServ(cmd *cobra.Command, args []string) {
@@ -38,10 +40,10 @@ func consServ(cmd *cobra.Command, args []string) {
 
 	srv := roadrunner.NewServer(
 		&roadrunner.ServerConfig{
-			Command: "php " + phpScript + " echo pipes",
+			Command: "php " + phpScript,
 			Relay:   "pipes",
 			Pool: &roadrunner.Config{
-				NumWorkers:      1,
+				NumWorkers:      consServFlagValue.numWorkers,
 				AllocateTimeout: time.Second,
 				DestroyTimeout:  time.Second,
 			},
@@ -67,12 +69,14 @@ func consServ(cmd *cobra.Command, args []string) {
 			break
 		}
 
-		fmt.Printf("message at topic/partition/offset %v/%v/%v: %s = %s\n", m.Topic, m.Partition, m.Offset, string(m.Key), string(m.Value))
-		_, err = srv.Exec(&roadrunner.Payload{Body: m.Value})
-		if err != nil {
-			panic(err)
-		}
+		go func() {
+			fmt.Printf("message at topic/partition/offset %v/%v/%v: %s = %s\n", m.Topic, m.Partition, m.Offset, string(m.Key), string(m.Value))
+			_, err = srv.Exec(&roadrunner.Payload{Body: m.Value})
+			if err != nil {
+				panic(err)
+			}
 
-		r.CommitMessages(ctx, m)
+			r.CommitMessages(ctx, m)
+		}()
 	}
 }
