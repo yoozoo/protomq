@@ -14,7 +14,7 @@ type goGen struct {
 }
 
 func (g *goGen) Init(request *plugin.CodeGeneratorRequest) {
-	g.clientTpl = util.getTpl("/template/go/client.gogo")
+	g.clientTpl = util.getTpl("/template/go/producer.gogo")
 }
 
 func (g *goGen) genClient(packageName string, msg *data.ProtoMessage) string {
@@ -56,9 +56,9 @@ func (g *goGen) Gen(applicationName string, packageName string, services []*data
 
 		g.topic = topic
 		m, _ := data.GetMessageProtoAndFile(msg.Name)
-		content := g.genClient(applicationName, m)
+		content := g.genClient(packageName, m)
 
-		result[m.Proto.GetName()+".client.go"] = content
+		result[m.Proto.GetName()+".producer.go"] = content
 		println("gen", topic)
 	}
 	return
@@ -69,5 +69,5 @@ func (g *goGen) GetLang() string {
 }
 
 func init() {
-	data.RegisterCodeGenerator("go", &goGen{})
+	data.RegisterCodeGenerator("goproducer", &goGen{})
 }

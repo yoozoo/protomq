@@ -1,7 +1,8 @@
 #!/usr/bin/env bats
 
 @test "test.proto go output" {
-	../protomq gen --lang=go result/go/test proto/test.proto
+	../protomq gen --lang=goproducer result/go/test/producer proto/test.proto
+	../protomq gen --lang=goconsumer result/go/test/consumer proto/test.proto
 
 	diff -I "^//.*$" -x "*.pb.go" -r result/go/ expected/go/
 }
