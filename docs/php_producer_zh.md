@@ -7,7 +7,7 @@ PHP通过生成的代码和向go程序发送topic和数据，go收到请求后�
 
 ### 命令
 ```bat
-protomq --lang=phpproducer ./output_folder ./test.proto
+protomq gen --lang=phpproducer ./output_folder ./test.proto
 ```
 该命令会生成如下结构的文件, `PackageName`为proto文件中所记录的包名，同时也会成为生成的代码的`Namespace`.
 ```
@@ -26,7 +26,7 @@ protomq --lang=phpproducer ./output_folder ./test.proto
 
 ### GPBMetadata目录
 * 每次运行上述命令生成php代码，都会生成`GPBMetadata`文件夹。建议同一个PHP项目下只有一个GPBMetadata文件夹，把每次生成的GPBMetadata文件都放在这一目录下，它们共享同一个Namespace.
-* 所有protomq生成的项目都需要用`proto`c额外生成[protomq.proto](../protomq.proto)文件的GPBMetadata. 你也可以直接把这个[已生成的文件](Protomq.php)放在对应的目录(GPBMetadata)下。
+* 所有protomq生成的项目都需要用`protoc`额外生成[protomq.proto](../protomq.proto)文件的GPBMetadata. 你也可以直接把这个[已生成的文件](Protomq.php)放在对应的目录(GPBMetadata)下。
 
 
 ### 添加依赖和设置自动加载
@@ -141,7 +141,7 @@ message TypedQueue {
 ```
 运行
 ```bat
-protomq --lang=phpproducer ./demo ./demo.proto
+protomq gen --lang=phpproducer ./demo ./demo.proto
 ```
 之后生成如下目录
 ```
