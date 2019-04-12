@@ -1,13 +1,14 @@
-# PHP生产者
+# PHP消费者
 
 ## 原理
-PHP通过生成的代码和向go程序发送topic和数据，go收到请求后将数据直接推送到kafka对应的topic.
+go程序通过roadrunner管理着一个php的进程池。
+当go程序从kafka获取到消息的时候，把消息发送给进程池中的一个php进程来处理。
 
 ## 代码生成
 
 ### 命令
 ```bat
-protomq gen --lang=phpproducer ./output_folder ./test.proto
+protomq gen --lang=phpconsumer ./output_folder ./test.proto
 ```
 该命令会生成如下结构的文件, `PackageName`为proto文件中所记录的包名，同时也会成为生成的代码的`Namespace`.
 ```
@@ -17,9 +18,9 @@ protomq gen --lang=phpproducer ./output_folder ./test.proto
 |    |    +-- Test.php
 |    +-- PackageName
 |    |    +-- Message1.php
-|    |    +-- Message1Producer.php
+|    |    +-- Message1Consumer.php
 |    |    +-- Message2.php
-|    |    +-- Message2Producer.php
+|    |    +-- Message2Consumer.php
 ```
 
 ## 集成
@@ -33,7 +34,7 @@ protomq gen --lang=phpproducer ./output_folder ./test.proto
 *   运行以下composer命令
     ```bat
     composer require google/protobuf
-    composer require spiral/goridge
+    composer require spiral/roadrunner
     ```
 
 *   编辑composer.json文件，添加如下autoload项
@@ -56,33 +57,22 @@ protomq gen --lang=phpproducer ./output_folder ./test.proto
 ### 使用生成的代码
 以上文生成的代码目录为例：
 * Message1.php和Message2.php是两个Message类。
-* Message1Producer.php和Message2Producer.php是两个Producer类。
+* Message1Consumer.php和Message2Consumer.php是两个Consumer类。
 
-我们要创建Message类的实例，并使用Producer类的实例把Message发送出去。下面是一个例子。
+我们要创建Consumer类的实例，注册一个消息handler，然后运行起来。下面是一个例子。
 ```php
 <?php
 include "vendor/autoload.php";
 
-// 构造函数的参数是go程序运行的地址和端口，默认是 127.0.0.1:8080
-$sender = new \PackageName\Message1Producer("127.0.0.1","8080");
-
-$data = new \PackageName\Message1([
-    // Message2 是 Message1 的child
-    "data1" => new \PackageName\Message2([
-        "msg1" => "hello",
-        "msg2" => "world",
-    ]),
-    "data2" => "!!",
-]);
-try {
-    $sender->send($data);
-} catch (Exception $e) {
-    echo $e;
-}
+$consumer = new \PackageName\Message1Consumer();
+$consumer->register_handler(function(\PackageName\Message1 $msg){
+    return;
+});
+$consumer->run();
 ```
 
 
-protomq也支持简单类型的消息传递。当proto文件中定义的Message只有一个子项，并且是简单类型时，可以不创建Message类，而是直接传递字符串。
+protomq也支持简单类型的消息传递。当proto文件中定义的Message只有一个子项，并且是简单类型时，handler函数会直接获得string类型的数据。
 假如proto中定义的message如下
 ```protobuf
 message DemoQueue {
@@ -90,28 +80,29 @@ message DemoQueue {
     string msg = 1;
 }
 ```
-PHP中可以直接这样使用
+PHP中会是这样的
 ```php
 <?php
 include "vendor/autoload.php";
 
-$sender = new \PackageName\DemoQueueProducer();
-
-try {
-    $sender->send("this is message.");
-} catch (Exception $e) {
-    echo $e;
-}
+$consumer = new \PackageName\Message1Consumer();
+$consumer->register_handler(function($msg){
+    // $msg 是 string
+    return;
+});
+$consumer->run();
 ```
 
 ## 运行
 
 ### 运行go服务
 ```bat
-protomq producerd --brokers=localhost:9092,localhost:9093 --port=8080
+protomq consumerd --brokers=localhost:9092,localhost:9093 --topic=demo_topic --workers=5 ./consumer.php
 ```
 `brokers`是kafka集群的地址，用逗号隔开，默认值为localhost:9092。
-`port`是本程序想要监听的端口，影响PHP端创建Producer类时的参数，默认值为8080。
+`topic`是本程序想要监听的topic，必填
+`workers`是php worker的数量，默认是1
+最后的参数是要运行的php脚本的地址。
 
 ## 完整示例
 假设我们有proto文件demo.proto,内容如下
@@ -141,7 +132,7 @@ message TypedQueue {
 ```
 运行
 ```bat
-protomq gen --lang=phpproducer ./demo ./demo.proto
+protomq gen --lang=phpconsumer ./demo ./demo.proto
 ```
 之后生成如下目录
 ```
@@ -152,15 +143,15 @@ protomq gen --lang=phpproducer ./demo ./demo.proto
 |    |    +-- Demo.php
 |    +-- Demopackage
 |    |    +-- SimpleQueue.php
-|    |    +-- SimpleQueueProducer.php
+|    |    +-- SimpleQueueConsumer.php
 |    |    +-- Log.php
 |    |    +-- TypedQueue.php
-|    |    +-- TypedQueueProducer.php
+|    |    +-- TypedQueueConsumer.php
 ```
 将Protomq.php放入GPBMetadata文件夹下，之后运行在根目录运行
 ```bat
     composer require google/protobuf
-    composer require spiral/goridge
+    composer require spiral/roadrunner
 ```
 编辑composer.json文件，加入如下内容
 ```json
@@ -177,7 +168,7 @@ protomq gen --lang=phpproducer ./demo ./demo.proto
 ```bat
 composer dump-autoload
 ```
-之后在根目录创建demo.php
+之后在根目录创建demo1.php和demo2.php
 
 此时项目目录如下
 ```
@@ -189,51 +180,50 @@ composer dump-autoload
 |    |    +-- Protomq.php
 |    +-- Demopackage
 |    |    +-- SimpleQueue.php
-|    |    +-- SimpleQueueProducer.php
+|    |    +-- SimpleQueueConsumer.php
 |    |    +-- Log.php
 |    |    +-- TypedQueue.php
-|    |    +-- TypedQueueProducer.php
+|    |    +-- TypedQueueConsumer.php
 +-- vendor
 |    +-- ...
 |    +-- autoload.php
 +-- composer.json
 +-- composer.lock
-+-- demo.php
++-- demo1.php
++-- demo2.php
 ```
-demo.php内容如下
+demo1.php内容如下
 ```php
 <?php
+// 复杂类型的示例
 include "vendor/autoload.php";
 
-// 发送简单字符串
-$simpleSender = new \Demopackage\SimpleQueueProducer("127.0.0.1","8080");
-try {
-    $simpleSender->send("this is a string");
-} catch (Exception $e) {
-    echo $e;
-}
+$consumer = new \Demopackage\TypedQueueConsumer();
+$consumer->register_handler(function(\Demopackage\TypedQueue $msg){
+    return;
+});
+$consumer->run();
 
-// 发送复杂类型
-$typedSender = new \Demopackage\TypedQueueProducer("127.0.0.1","8080");
-$data = new \Demopackage\TypedQueue([
-    "data" => new \Demopackage\Log([
-        "msg" => "hello",
-        "version" => 3,
-    ]),
-]);
-try {
-    $typedSender->send($data);
-} catch (Exception $e) {
-    echo $e;
-}
+```
+demo2.php内容如下
+```php
+<?php
+// 简单类型的示例
+include "vendor/autoload.php";
+
+$consumer = new \Demopackage\SimpleQueueConsumer();
+$consumer->register_handler(function($msg){
+    // $msg 是 string
+    return;
+});
+$consumer->run();
+
 ```
 
 运行如下命令启动go程序
 ```bat
-protomq producerd
+protomq consumerd --brokers=localhost:9092 --topic=typed --workers=1 ./demo1.php
 ```
-
-之后在项目根目录运行如下命令会向kafka的simple和typed两个topic各发送一条消息。
 ```bat
-php ./demo.php
+protomq consumerd --brokers=localhost:9092 --topic=simple --workers=1 ./demo2.php
 ```
