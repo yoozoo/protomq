@@ -15,7 +15,6 @@ func main() {
 	protocli.KeepDefaultLangOut = true
 	protocli.RootCmd.AddCommand(consServCmd)
 	protocli.RootCmd.AddCommand(prodServCmd)
-	protocli.RootCmd.AddCommand(genCmd)
 	protocli.RegisterIncludeFile(commonProtoPath, tpl.FSMustString(false, commonProtoPath))
 	protocli.Run()
 }

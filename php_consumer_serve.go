@@ -2,81 +2,90 @@ package main
 
 import (
 	"context"
-	"fmt"
+	"log"
+	"os"
+	"os/signal"
 	"strings"
-	"time"
+	"syscall"
 
-	"github.com/segmentio/kafka-go"
+	"github.com/Shopify/sarama"
 	"github.com/spf13/cobra"
-	"github.com/spiral/roadrunner"
 )
 
 type consServFlag struct {
-	topic      string
 	group      string
 	brokers    string
+	oldest     bool
+	verbose    bool
 	numWorkers int64
 }
 
 var consServFlagValue consServFlag
 
 var consServCmd = &cobra.Command{
-	Use:   "consumerd <comsumer.php>",
-	Short: "consumerd serve a php script as mq consumer",
-	Args:  cobra.ExactArgs(1),
+	Use:   "consumerd <topcis> <comsumer.php>",
+	Short: "consumerd serve a php script as mq consumer. \"topcis\" separated by \",\"",
+	Args:  cobra.ExactArgs(2),
 	Run:   consServ,
 }
 
 func init() {
-	consServCmd.Flags().StringVar(&consServFlagValue.topic, "topic", "", "topic in msg go")
 	consServCmd.Flags().StringVar(&consServFlagValue.group, "group", "php", "consumer group; default php")
 	consServCmd.Flags().StringVar(&consServFlagValue.brokers, "brokers", "localhost:9092", "brokers, separated by ,")
 	consServCmd.Flags().Int64Var(&consServFlagValue.numWorkers, "workers", 1, "number of max php workers")
+	consServCmd.Flags().BoolVar(&consServFlagValue.oldest, "oldest", true, "if kafka consumer consume initial offset from oldest")
+	consServCmd.Flags().BoolVar(&consServFlagValue.verbose, "verbose", false, "if show log")
 }
 
 func consServ(cmd *cobra.Command, args []string) {
+	log.Println("Starting a new kafka consumer")
+
 	ctx := context.Background()
-	phpScript := args[0]
+	topics := strings.Split(args[0], ",")
+	phpScript := args[1]
 
-	srv := roadrunner.NewServer(
-		&roadrunner.ServerConfig{
-			Command: "php " + phpScript,
-			Relay:   "pipes",
-			Pool: &roadrunner.Config{
-				NumWorkers:      consServFlagValue.numWorkers,
-				AllocateTimeout: time.Second,
-				DestroyTimeout:  time.Second,
-			},
-		})
-	defer srv.Stop()
+	/**
+	 * Setup a new Sarama consumer group
+	 */
+	consumer := &phpConsumer{
+		script: phpScript,
+	}
 
-	err := srv.Start()
+	config := sarama.NewConfig()
+
+	if consServFlagValue.oldest {
+		config.Consumer.Offsets.Initial = sarama.OffsetOldest
+	}
+
+	client, err := sarama.NewConsumerGroup(
+		strings.Split(consServFlagValue.brokers, ","),
+		consServFlagValue.group,
+		config,
+	)
 	if err != nil {
 		panic(err)
 	}
 
-	r := kafka.NewReader(kafka.ReaderConfig{
-		Brokers:  strings.Split(consServFlagValue.brokers, ","),
-		GroupID:  consServFlagValue.group,
-		Topic:    consServFlagValue.topic,
-		MinBytes: 10e3, // 10KB
-		MaxBytes: 10e6, // 10MB
-	})
-
-	for {
-		m, err := r.FetchMessage(ctx)
-		if err != nil {
-			break
-		}
-
-		go func() {
-			fmt.Printf("message at topic/partition/offset %v/%v/%v: %s = %s\n", m.Topic, m.Partition, m.Offset, string(m.Key), string(m.Value))
-			_, err = srv.Exec(&roadrunner.Payload{Body: m.Value})
+	go func() {
+		for {
+			consumer.ready = make(chan bool, 0)
+			err := client.Consume(ctx, topics, consumer)
 			if err != nil {
 				panic(err)
 			}
+		}
+	}()
 
-			r.CommitMessages(ctx, m)
-		}()
+	<-consumer.ready // Await till the consumer has been set up
+	log.Println("consumer up and running!...")
+
+	sigterm := make(chan os.Signal, 1)
+	signal.Notify(sigterm, syscall.SIGINT, syscall.SIGTERM)
+
+	<-sigterm // Await a sigterm signal before safely closing the consumer
+	consumer.srv.Stop()
+	err = client.Close()
+	if err != nil {
+		panic(err)
 	}
 }
