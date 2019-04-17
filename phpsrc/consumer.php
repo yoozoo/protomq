@@ -1,12 +1,13 @@
 <?php
-namespace {{ .PackageName }};
+namespace Yoozoo\Protomq;
 
 use Exception;
 use Spiral\Goridge;
 use Spiral\RoadRunner;
 
-class {{ .ClassName }}
+class SimpleConsumer
 {
+
     private $rr;
     private $handler;
 
@@ -37,5 +38,6 @@ class {{ .ClassName }}
                 $this->rr->error((string) $e);
             }
         }
+
     }
 }
