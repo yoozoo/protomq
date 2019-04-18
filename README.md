@@ -5,6 +5,7 @@
 ## 初始化
 
 ```bash
+go get  github.com/yoozoo/protomq
 protomq init
 ```
 
