@@ -97,12 +97,13 @@ $consumer->run();
 
 ### 运行go服务
 ```bat
-protomq consumerd --brokers=localhost:9092,localhost:9093 --topic=demo_topic --workers=5 ./consumer.php
+protomq consumerd --brokers=localhost:9092,localhost:9093 --topics=demo_topic --group=php --workers=5 ./consumer.php
 ```
-`brokers`是kafka集群的地址，用逗号隔开，默认值为localhost:9092。
-`topic`是本程序想要监听的topic，必填
-`workers`是php worker的数量，默认是1
-最后的参数是要运行的php脚本的地址。
+* `brokers`是kafka集群的地址，用逗号隔开，默认值为localhost:9092。
+* `topics`是本程序想要监听的topic，用逗号隔开，必填。
+* `workers`是php worker的数量，默认是5.
+* `group`是consumer group的标识，默认是php.
+* 最后的参数是要运行的php脚本的地址。
 
 ## 完整示例
 假设我们有proto文件demo.proto,内容如下
@@ -222,8 +223,8 @@ $consumer->run();
 
 运行如下命令启动go程序
 ```bat
-protomq consumerd --brokers=localhost:9092 --topic=typed --workers=1 ./demo1.php
+protomq consumerd --brokers=localhost:9092 --topics=typed --workers=1 ./demo1.php
 ```
 ```bat
-protomq consumerd --brokers=localhost:9092 --topic=simple --workers=1 ./demo2.php
+protomq consumerd --brokers=localhost:9092 --topics=simple --workers=1 ./demo2.php
 ```

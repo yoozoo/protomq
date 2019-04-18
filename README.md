@@ -31,14 +31,16 @@ go get -u github.com/golang/protobuf/protoc-gen-go
 生成`go 生产者客户端`
 
 ```bash
-./protomq.exe gen --lang=go ./output_folder ./test.proto
+./protomq.exe gen --lang=goproducer ./output_folder ./test.proto
 ```
 
-生成`php 消费者服务器端`
+生成`go 消费者服务器端`
 
 ```bash
-./protomq.exe gen --lang=phpconsumer ./output_folder ./test.proto
+./protomq.exe gen --lang=goconsumer ./output_folder ./test.proto
 ```
+
+生成`php 消费者服务器端`详情在[这里](docs/php_consumer_zh.md)。另外`php 消费者简单类型服务器端`的文档在这里[这里](docs/php_consumer_simpletype_zh.md)。
 
 生成`php 生产者客户端`详情在[这里](docs/php_producer_zh.md)。
 
