@@ -2,9 +2,11 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"os"
 	"os/signal"
+	"strconv"
 	"strings"
 	"syscall"
 
@@ -18,6 +20,7 @@ type consServFlag struct {
 	oldest     bool
 	verbose    bool
 	numWorkers int64
+	offset     string
 }
 
 var consServFlagValue consServFlag
@@ -35,6 +38,7 @@ func init() {
 	consServCmd.Flags().Int64Var(&consServFlagValue.numWorkers, "workers", 5, "number of max php workers")
 	consServCmd.Flags().BoolVar(&consServFlagValue.oldest, "oldest", true, "if kafka consumer consume initial offset from oldest")
 	consServCmd.Flags().BoolVar(&consServFlagValue.verbose, "verbose", false, "if show log")
+	consServCmd.Flags().StringVar(&consServFlagValue.offset, "offset", "", "manually set offset, format: 'partition0:offset0,partition1:offset1,partition2:offset2'")
 }
 
 func consServ(cmd *cobra.Command, args []string) {
@@ -44,11 +48,24 @@ func consServ(cmd *cobra.Command, args []string) {
 	topics := strings.Split(args[0], ",")
 	phpScript := args[1]
 
-	/**
-	 * Setup a new Sarama consumer group
-	 */
+	// parse offset
+	offset := make(map[int32]int64, 0)
+	for _, popair := range strings.Split(consServFlagValue.offset, ",") {
+		temp := strings.Split(popair, ":")
+		pt, err := strconv.Atoi(temp[0])
+		if err != nil {
+			panic(fmt.Errorf("invalid offset: %s", consServFlagValue.offset))
+		}
+		os, err := strconv.Atoi(temp[1])
+		if err != nil {
+			panic(fmt.Errorf("invalid offset: %s", consServFlagValue.offset))
+		}
+		offset[int32(pt)] = int64(os)
+	}
 	consumer := &phpConsumer{
 		script: phpScript,
+		offset: offset,
+		group:  consServFlagValue.group,
 	}
 
 	config := sarama.NewConfig()
