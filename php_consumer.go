@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"log"
 	"time"
 
@@ -47,15 +48,16 @@ func (c *phpConsumer) Cleanup(sarama.ConsumerGroupSession) error {
 func (c *phpConsumer) ConsumeClaim(session sarama.ConsumerGroupSession, claim sarama.ConsumerGroupClaim) error {
 	// The `ConsumeClaim` itself is called within a goroutine
 	for message := range claim.Messages() {
-		go func() {
+		go func(message *sarama.ConsumerMessage) {
 			log.Printf("Message: value = %s, timestamp = %v, topic = %s, partition = %s", string(message.Value), message.Timestamp, message.Topic, message.Partition)
-			_, err := c.srv.Exec(&roadrunner.Payload{Body: message.Value})
+			body, _ := json.Marshal([]string{message.Topic, string(message.Value)})
+			_, err := c.srv.Exec(&roadrunner.Payload{Body: body})
 			if err != nil {
 				panic(err)
 			}
 
 			session.MarkMessage(message, "")
-		}()
+		}(message)
 	}
 
 	return nil

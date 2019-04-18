@@ -32,7 +32,7 @@ var consServCmd = &cobra.Command{
 func init() {
 	consServCmd.Flags().StringVar(&consServFlagValue.group, "group", "php", "consumer group; default php")
 	consServCmd.Flags().StringVar(&consServFlagValue.brokers, "brokers", "localhost:9092", "brokers, separated by ,")
-	consServCmd.Flags().Int64Var(&consServFlagValue.numWorkers, "workers", 1, "number of max php workers")
+	consServCmd.Flags().Int64Var(&consServFlagValue.numWorkers, "workers", 5, "number of max php workers")
 	consServCmd.Flags().BoolVar(&consServFlagValue.oldest, "oldest", true, "if kafka consumer consume initial offset from oldest")
 	consServCmd.Flags().BoolVar(&consServFlagValue.verbose, "verbose", false, "if show log")
 }
@@ -56,6 +56,8 @@ func consServ(cmd *cobra.Command, args []string) {
 	if consServFlagValue.oldest {
 		config.Consumer.Offsets.Initial = sarama.OffsetOldest
 	}
+	version, _ := sarama.ParseKafkaVersion("0.10.2.0")
+	config.Version = version
 
 	client, err := sarama.NewConsumerGroup(
 		strings.Split(consServFlagValue.brokers, ","),

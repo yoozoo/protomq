@@ -4,3 +4,4 @@ temp/
 test/result/
 
 /vendor/
+/testphp/

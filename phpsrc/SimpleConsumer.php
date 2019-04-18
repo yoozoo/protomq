@@ -31,7 +31,8 @@ class SimpleConsumer
     {
         while ($body = $this->rr->receive($context)) {
             try {
-                call_user_func($this->handler, $body);
+                $data = json_decode($body, true);
+                call_user_func_array($this->handler,$data);
 
                 $this->rr->send("", (string) $context);
             } catch (\Throwable $e) {
