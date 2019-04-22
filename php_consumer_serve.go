@@ -36,7 +36,7 @@ func init() {
 	consServCmd.Flags().StringVar(&consServFlagValue.group, "group", "php", "consumer group; default php")
 	consServCmd.Flags().StringVar(&consServFlagValue.brokers, "brokers", "localhost:9092", "brokers, separated by ,")
 	consServCmd.Flags().Int64Var(&consServFlagValue.numWorkers, "workers", 5, "number of max php workers")
-	consServCmd.Flags().BoolVar(&consServFlagValue.oldest, "oldest", true, "if kafka consumer consume initial offset from oldest")
+	consServCmd.Flags().BoolVar(&consServFlagValue.oldest, "oldest", false, "if kafka consumer consume initial offset from oldest")
 	consServCmd.Flags().BoolVar(&consServFlagValue.verbose, "verbose", false, "if show log")
 	consServCmd.Flags().StringVar(&consServFlagValue.offset, "offset", "", "manually set offset, format: 'partition0:offset0,partition1:offset1,partition2:offset2'")
 }
