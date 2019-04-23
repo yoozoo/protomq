@@ -73,3 +73,15 @@ $consumer->run();
 ```bat
 protomq consumerd --brokers=localhost:9092 --topics=demo1,demo2 --workers=5 ./demo.php
 ```
+## 设定offset
+consumerd 命令支持设定partition/offset, 格式为partition0:offset0,partition1:offset1,partition2:offset2
+
+### 示例
+```
+protomq consumerd --brokers=localhost:9092 --topics=demo1,demo2 --workers=5 --group=demo --offset=0:2,1:3 ./demo.php
+```
+上述命令会在运行时将demo这个consumer group在partition 0上的offset设为2，在partition 1上的offset设为3.
+
+注意，offset设置只有在当前consumer对应到相应partition时才会生效，如果同时运行多个protomq consumerd命令，建议为每个命令都设置完整的offset.
+
+注意，如果不设定group的话，会使用默认group 'php'

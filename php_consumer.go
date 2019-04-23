@@ -14,10 +14,12 @@ type phpConsumer struct {
 	ready  chan bool
 	script string
 	srv    *roadrunner.Server
+	offset map[int32]int64
+	group  string
 }
 
 // Setup is run at the beginning of a new session, before ConsumeClaim
-func (c *phpConsumer) Setup(sarama.ConsumerGroupSession) error {
+func (c *phpConsumer) Setup(session sarama.ConsumerGroupSession) error {
 	c.srv = roadrunner.NewServer(
 		&roadrunner.ServerConfig{
 			Command: "php " + c.script,
@@ -31,6 +33,12 @@ func (c *phpConsumer) Setup(sarama.ConsumerGroupSession) error {
 	err := c.srv.Start()
 	if err != nil {
 		panic(err)
+	}
+
+	if len(c.offset) > 0 {
+		for p, o := range c.offset {
+			session.ResetOffset(c.group, p, o, "")
+		}
 	}
 
 	// Mark the consumer as ready
